@@ -1,0 +1,15 @@
+{
+  "optimizer": "SGD",
+  "batch_size": 4,  // Batch size per GPU. The effective batch size is effective_batch_size=world_size*batch_size
+  "base_lr": 0.003,  // Will be multiplied by the effective_batch_size=world_size*batch_size.
+  "max_lr": 1e-1,  // Maximum resulting learning rate
+  "gamma": 0.9,  // Gamma of exponential learning rate scheduler
+  "weight_decay": 0.0001,  // Not used
+  "dropout_keep_prob": 1.0,  // Not used
+  "max_epoch": 1000,
+  "log_steps": 200,
+  "checkpoint_epoch": 1,
+  "checkpoints_to_keep": 5,  // outputs
+  "logs_dirname": "logs",
+  "checkpoints_dirname": "checkpoints"
+}

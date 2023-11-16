@@ -1,0 +1,42 @@
+{
+  "defaults_filepath": "configs/config.defaults.mapping_dataset.json",
+
+  "run_name": "gh_dataset.unet_resnet152_pretrained_bufferWidth_2", // unet_resnet152_pretrained_bufferWidth_1
+  "num_workers": 2,
+
+  "dataset_params": {
+    "root_dirname": "gh_dataset"
+  },
+
+  "data_aug_params": {
+    "enable": true,
+    "vflip": true,
+    "affine": false,
+    "scaling": [0.75, 1.5],  // Range of scaling factor to apply during affine transform. Set to None to not apply.
+    "color_jitter": true,
+    "device": "cuda"
+  },
+
+  "backbone_params": {
+    "defaults_filepath": "configs/backbone_params.unet_resnet101.json",  // Path from the project's root to a JSON with default values for backbone_params
+    "encoder_depth": 152,  // 34, 101 and 152 are possible
+    "pretrained": true
+  },
+
+  "optim_params": {
+    "base_lr": 0.003,
+    "weight_decay": 0.0001,
+    "batch_size": 4  // Overwrite default batch size per GPU. The effective batch size is effective_batch_size=world_size*batch_size
+  },
+
+  "loss_params": {
+    "use_dist": false,
+    "use_size": false,
+    "multiloss": {
+      "coefs": {
+        "epoch_thresholds": [0, 20, 40]  // 25: [0, 5, 10], 300: [0, 60, 120] [0, 20, 40]
+      }
+    }
+  }
+
+}
