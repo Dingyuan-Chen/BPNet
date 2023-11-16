@@ -11,7 +11,7 @@ Despite the remarkable progress of deep learning-based object extraction in reve
 Please refer to INSTALL.md in [Frame-Field-Learning](https://github.com/Lydorn/Polygonization-by-Frame-Field-Learning) and [CascadePSP](https://github.com/hkchengrex/CascadePSP) for installation and dataset preparation.
 
 ## Downloads
-Download pretrained weights of the high-frequency refinement module at [here](xxxx) (./models/)
+Download pretrained weights of the high-frequency refinement module (./models/) at [BaiduDrive](https://pan.baidu.com/s/1HYVebWlpYN6LRddnV_c7kg) (code: sj2p)
 
 ## Getting Started
 1. Train a model
@@ -30,14 +30,41 @@ python main.py --config configs/config.gh_dataset.unet_resnet152_pretrained.json
 python main.py --run_name gh_dataset.{run_name} --in_filepath {in_filepath}/images/ --out_dirpath {out_dirpath}/results
 ```
 
-## Benchmark results
-|Model                      |Data           |    Backbone     |    MS  |  Rotate | Lr schd  | box AP | Download|
-|:-------------:            |:-------------:| :-------------: | :-----:| :-----: | :-----:  | :----: | :---------------------------------------------------------------------------------------: |
-|ReDet                      |DOTA-v1.0       |    ReR50-ReFPN     |   -    |   -    |   1x     |  76.25 |    [cfg](configs/ReDet/ReDet_re50_refpn_1x_dota1.py) [model](https://drive.google.com/file/d/1LCz-Q8PJkr-x9kJk7PcCy37W_cPAdmvO/view?usp=sharing) [log](https://drive.google.com/file/d/1OXgenH6YvtyRUwPH8h9f9p9tBCh60Kln/view?usp=sharing)      |
-|ReDet                      |DOTA-v1.0       |    ReR50-ReFPN     |   ✓    |   ✓    |   1x     |  80.10 |    [cfg](configs/ReDet/ReDet_re50_refpn_1x_dota1_ms.py) [model](https://drive.google.com/file/d/1uJb75xTFmQu4db1X8NQKuRNNTrN7TtuA/view?usp=sharing) [log](https://drive.google.com/file/d/1reDaa_ouBfLAZj8Z6wEDsOKxDjeLo0Gt/view?usp=sharing)        |
-|ReDet                      |DOTA-v1.5       |    ReR50-ReFPN     |   -    |   -    |   1x     |  66.86 |    [cfg](configs/ReDet/ReDet_re50_refpn_1x_dota15.py) [model](https://drive.google.com/file/d/1AjG3-Db_hmZF1YSKRVnq8j_yuxzualRo/view?usp=sharing) [log](https://drive.google.com/file/d/17dsP9EUbLTV9THkOAA3G3jpmIHHnj83-/view?usp=sharing)        |
-|ReDet                      |DOTA-v1.5       |    ReR101-ReFPN     |   -    |   -    |   1x     |  67.62 |    [cfg](configs/ReDet/ReDet_re101_refpn_1x_dota15.py) [model](https://drive.google.com/file/d/1vN4ShOqegn4__QY_hgykota20Qa1mnBQ/view?usp=sharing) [log](https://drive.google.com/file/d/1eKiXI91VudU7rGufdEt526cO8kEm9dAc/view?usp=sharing)        |
-|ReDet                      |DOTA-v1.5       |    ReR50-ReFPN     |   ✓    |   ✓    |   1x     |  76.80 |    [cfg](configs/ReDet/ReDet_re50_refpn_1x_dota15_ms.py) [model](https://drive.google.com/file/d/1I1IDmt3juw1sm-CT-zaosVVDldAHYBIO/view?usp=sharing) [log](https://drive.google.com/file/d/1T2Eou26T0mpmP93X_XrFk-AhSicLrgGp/view?usp=sharing)        |
-|ReDet                      |HRSC2016        |    ReR50-ReFPN     |   -    |   -    |   3x     |  90.46 |    [cfg](configs/ReDet/ReDet_re50_refpn_3x_hrsc2016.py) [model](https://drive.google.com/file/d/1vTU6OeFD6CX4zkQn7szlgL7Qc_MOZpgC/view?usp=sharing) [log](https://drive.google.com/file/d/1csbm3jop9MGOQt8JaEeBg6TEXOZXY-yo/view?usp=sharing)        |
+## Agricultural greenhouse extraction dataset results
+|Model                      |Backbone           |    ${mAP}_{segm}$     |    ${AP50}_{segm}$  |  ${AP50}_{bd}$ | Speed (fps) |
+|:-------------:            |:-------------: | :-----:| :-----: | :-----:  | :-----:  |
+|[Top-Down] PolygonRNN (Castrejon et al., 2017)   |R50  | 11.22 | 23.76 | 17.60 | 7.40 |
+|[Top-Down] DELTA (Ma et al., 2021)   |R50  | 19.45 | 35.43 | 32.80 | 11.80 |
+|[Top-Down] SOLO (Wang et al., 2020)   |R50  | 30.30 | 55.40 | 49.89 | 18.50 |
+|[Top-Down] Mask R-CNN (He et al., 2017)   |R50  | 34.26 | 60.68 | 57.76 | 10.60 |
+|[Bottom-Up] ResUNet (Xu et al., 2018)   |R34  | 26.89 | 47.34 | 42.36 | 26.80 |
+|[Bottom-Up] ResUNet (Xu et al., 2018)   |R101  | 28.45 | 50.77 | 46.63 | 24.70 |
+|[Bottom-Up] ResUNet (Xu et al., 2018)   |R152  | 30.55 | 54.20 | 50.17 | 23.10 |
+|[Refinement] ECL (Liu et al., 2020)   |R152  | 30.89 | 55.41 | 50.57 | 22.80 |
+|[Refinement] PointRend (Kirillov et al., 2020)   |R50  | 33.45 | 63.95 | 61.79 | 8.50 |
+|[Refinement] CascadePSP (Cheng et al., 2020)   |R152  | 30.54 | 54.80 | 50.58 | 21.70 |
+|[Refinement] CBR-Net (Guo et al., 2022)   |R152  | 28.79 | 46.22 | 41.47 | 22.80 |
+|BPNet (proposed)   |R152  | 40.36 | 73.51 | 66.15 | 21.10 |
 
+## Citation
 
+```BibTeX
+@article{chen2023large,
+  title={Large-scale agricultural greenhouse extraction for remote sensing imagery based on layout attention network: A case study of China},
+  author={Chen, Dingyuan and Ma, Ailong and Zheng, Zhuo and Zhong, Yanfei},
+  journal={ISPRS Journal of Photogrammetry and Remote Sensing},
+  volume={200},
+  pages={73--88},
+  year={2023},
+  publisher={Elsevier}
+}
+@article{ma2021national,
+  title={National-scale greenhouse mapping for high spatial resolution remote sensing imagery using a dense object dual-task deep learning framework: A case study of China},
+  author={Ma, Ailong and Chen, Dingyuan and Zhong, Yanfei and Zheng, Zhuo and Zhang, Liangpei},
+  journal={ISPRS Journal of Photogrammetry and Remote Sensing},
+  volume={181},
+  pages={279--294},
+  year={2021},
+  publisher={Elsevier}
+}
+```
